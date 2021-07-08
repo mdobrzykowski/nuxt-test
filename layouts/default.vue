@@ -39,6 +39,13 @@
         >
             <v-app-bar-nav-icon @click.stop="miniVariant = !miniVariant" />
             <v-toolbar-title v-text="title" />
+            <v-spacer/>
+            <v-btn
+                icon
+                @click.stop="switchTcheme"
+            >
+                <v-icon>mdi-brightness-6</v-icon>
+            </v-btn>
         </v-app-bar>
         <v-main>
             <v-container>
@@ -57,27 +64,32 @@ export default {
     },
     data () {
         return {
-        clipped: true,
-        drawer: true,
-        items: [
-            {
-                icon: 'mdi-gift-outline', // https://materialdesignicons.com/
-                title: 'Donate',
-                to: '/donate'
-            },
-            {
-                icon: 'mdi-cart-outline',
-                title: 'Shop',
-                to: '/shop'
-            },
-            {
-                icon: 'mdi-credit-card-refresh-outline',
-                title: 'Subscription',
-                to: '/subscription'
-            }
-        ],
-        miniVariant: true,
-        title: 'Test'
+            clipped: true,
+            drawer: true,
+            items: [
+                {
+                    icon: 'mdi-gift-outline', // https://materialdesignicons.com/
+                    title: 'Donate',
+                    to: '/donate'
+                },
+                {
+                    icon: 'mdi-cart-outline',
+                    title: 'Shop',
+                    to: '/shop'
+                },
+                {
+                    icon: 'mdi-credit-card-refresh-outline',
+                    title: 'Subscription',
+                    to: '/subscription'
+                }
+            ],
+            miniVariant: true,
+            title: 'Test'
+        }
+    },
+    methods: {
+        switchTcheme(){
+            this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
         }
     }
 }
