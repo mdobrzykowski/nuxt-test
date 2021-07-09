@@ -62,6 +62,7 @@ export default {
     components: {
         MenuItem,
     },
+
     data () {
         return {
             clipped: true,
@@ -84,9 +85,30 @@ export default {
                 }
             ],
             miniVariant: true,
-            title: 'Test'
+            title: 'Test',
+
+            usersSnaphotUnsubscribe: () => {},
         }
     },
+
+    mounted(){
+        this.$auth.onAuthStateChanged(tmpUser => {
+            if(!tmpUser){
+                this.$store.commit('setUser', null);
+                return;
+            }
+
+            const ref = this.$firestore.collection("users").doc(tmpUser.uid);
+            this.usersSnaphotUnsubscribe = ref.onSnapshot(doc => {
+                this.$store.commit('setUser', doc.data());
+            });
+        });
+    },
+
+    unmounted() {
+        this.usersSnaphotUnsubscribe();
+    },
+
     methods: {
         switchTcheme(){
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
